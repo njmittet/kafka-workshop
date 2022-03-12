@@ -1,0 +1,15 @@
+KAFKA_INTERNAL_PORT=29092
+KAFKA_NETWORK='dev.internal'
+KCAT_IMAGE='edenhill/kcat:1.7.1'
+DOCKER_MODE='-it'
+
+export function kcat() {
+    if [[ $1 == "-i" ]] || [[ $1 == "-it" ]]; then
+        DOCKER_MODE=$1
+        shift
+    fi
+    docker run $DOCKER_MODE --rm --network $KAFKA_NETWORK $KCAT_IMAGE -b kafka:$KAFKA_INTERNAL_PORT $@
+}
+
+# For kafka/bin scripts
+export KAFKA_BROKER='localhost:9092'

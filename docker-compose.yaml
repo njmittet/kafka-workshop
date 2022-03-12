@@ -1,6 +1,6 @@
 networks:
-  confluent.internal:
-    name: confluent.internal
+  dev.internal:
+    name: dev.internal
 
 services:
 
@@ -8,9 +8,9 @@ services:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:7.0.1
     networks:
-      confluent.internal:
+      dev.internal:
         aliases:
-          - zookeeper.confluent.internal
+          - zookeeper.dev.internal
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -23,9 +23,9 @@ services:
     ports:
       - 9092:9092
     networks:
-      confluent.internal:
+      dev.internal:
         aliases:
-          - kafka.confluent.internal
+          - kafka.dev.internal
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
