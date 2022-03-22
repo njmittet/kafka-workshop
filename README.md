@@ -7,8 +7,8 @@ A `docker-compose` project that exposes Apache Kafka on port 9092 and provides a
 For the instructions in this repo to work, you will need:
 
 1. A working [Docker](docker) installation
-2. [docker-compose](docker compose)
-3. The `bin/kafka` scripts on your path.
+2. A working [docker-compose](https://docs.docker.com/compose/) installation.
+3. The `bin/kafka` scripts on your path (optional, but recommended).
 
 ### Clone Repository
 
@@ -80,9 +80,9 @@ If the `-e` is omitted, the consumer will continue to wait for the next message.
 
 ## Two ways of sending
 
-In the background Kcat is a Docker imaged started with the `-it` parameter, which opens a interactive shell in the running container, as in the example above.
+In the background, Kcat is a Docker image started with the `-it` flag which opens an interactive shell *in* the running container.
 
-It is also possible to send messages from a file by making Kcat read form stdin:
+It is also possible to send messages from a file by making Kcat read from stdin:
 
 ```sh
 $ cat messages.txt | kcat -i -P -t my-batch-topic
@@ -90,13 +90,13 @@ $ cat messages.txt | kcat -i -P -t my-batch-topic
 
 The example above vil trigger a `batch mode` send, which has its own implications (and configuration parameters), so it is also possible to send the messages in a file one by one by looping over them:
 
+When reading files from stdin the `-t` **must** be used in order to turn of TTY, and it **has to be the first parameter**.
+
 ```sh
 IFS='\n' # Set Internal Field Separator to avoid spaces to behave as newline (might depend on the shell).
 
 for i in $(cat messages.txt); do echo $i | kcat -i -P -t my-topic; done
 ```
-
-Note, when reading files from stdin the `-t` **must** be used in order to turn of TTY, and it **has to be the first parameter**.
 
 ## Message as Key-Value Pairs
 
