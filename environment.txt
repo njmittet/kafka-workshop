@@ -3,7 +3,7 @@ KAFKA_NETWORK='dev.internal'
 KCAT_IMAGE='edenhill/kcat:1.7.1'
 DOCKER_MODE='-it'
 
-export function kcat() {
+function kcat() {
     if [[ $1 == "-i" ]] || [[ $1 == "-it" ]]; then
         DOCKER_MODE=$1
         shift
