@@ -192,3 +192,30 @@ Read from all topics (the partitions and offsets are added to the formatting wit
 ```
 
 Note that the messages spread across the partitions, and only in order *within* each partition.
+
+## Advanced Topics
+
+Compacting:
+
+- [An Introduction to Topic Log Compaction in Apache Kafka](https://medium.com/swlh/introduction-to-topic-log-compaction-in-apache-kafka-3e4d4afd2262)
+
+Insight into how Kafka stores data:
+
+- [A Deep dive into Apache Kafka storage internals](https://strimzi.io/blog/2021/12/17/kafka-segment-retention/)
+
+### Kafka Configuration
+
+An insight into the vast number Kafka configuration parameters:
+
+- [Kafka Broker Configuration](https://kafka.apache.org/081/documentation.html#configuration)
+- [Optimizing Kafka Broker Configuration](https://strimzi.io/blog/2021/06/08/broker-tuning/)
+- [Optimizing Kafka Producers](https://strimzi.io/blog/2020/10/15/producer-tuning/)
+- [Optimizing Kafka Consumers](https://strimzi.io/blog/2021/01/07/consumer-tuning/)
+
+### Articles
+
+Articles worth reading:
+
+- [Lessons learned from running Kafka at Datadog](https://www.datadoghq.com/blog/kafka-at-datadog/)
+- [Time for AI: Flexibility With Traps in Kafka](https://synerise.com/blog/time-for-ai-flexibility-with-traps-in-kafka)
+- [How We Process One Billion Events Per Day With Kafka](https://www.metarouter.io/blog-posts/how-we-process-one-billion-events-per-day-with-kafka)
