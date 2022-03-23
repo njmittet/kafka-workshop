@@ -56,7 +56,7 @@ Kcat does mode auto-selecting, so using -P or -C to override is actually optiona
 
 ### Sending
 
-Basic send and receive of a text message:
+Send text messages:
 
 ```sh
 $ kcat -P -t my-topic
@@ -78,7 +78,7 @@ My Second Message
 
 If the `-e` is omitted, the consumer will continue to wait for the next message.
 
-## Two ways of sending
+## Batch Mode Sending
 
 In the background, Kcat is a Docker image started with the `-it` flag which opens an interactive shell *in* the running container.
 
