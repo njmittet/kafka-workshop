@@ -2,6 +2,8 @@
 
 A `docker-compose` project that exposes Apache Kafka on port 9092 and provides a wrapper configuration around the [edenhill/kcat](https://github.com/edenhill/kcat) Docker image.
 
+This repository is created for a [miles.no](https://www.miles.no) Kafka Workshop, but should be valuable for everyone that wants to check out Apache Kafka.
+
 ## Requirements
 
 For the instructions in this repo to work, you will need:
