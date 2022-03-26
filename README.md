@@ -61,7 +61,7 @@ Kcat does mode auto-selecting, so using -P or -C to override is actually optiona
 Send text messages:
 
 ```sh
-$ kcat -P -t my-topic
+$ kcat -P -t workshop.messages
 My First Message  # Enter
 My Second Message # Enter
 # Ctrl-D to finish
@@ -72,10 +72,10 @@ My Second Message # Enter
 Receive all messages on a topic and finish:
 
 ```sh
-$ kcat -C -t my-topic -e
+$ kcat -C -t workshop.messages -e
 My First Message 
 My Second Message 
-% Reached end of topic my-topic [0] at offset 2: exiting
+% Reached end of topic workshop.messages [0] at offset 2: exiting
 ```
 
 If the `-e` is omitted, the consumer will continue to wait for the next message.
@@ -87,7 +87,7 @@ In the background, Kcat is a Docker image started with the `-it` flag which open
 It is also possible to send messages from a file by making Kcat read from stdin:
 
 ```sh
-$ cat messages.txt | kcat -i -P -t my-batch-topic
+$ cat messages.txt | kcat -i -P -t workshop.messages
 ```
 
 The example above vil trigger a `batch mode` send, which has its own implications (and configuration parameters), so it is also possible to send the messages in a file one by one by looping over them:
@@ -97,7 +97,7 @@ When reading files from stdin the `-t` **must** be used in order to turn of TTY,
 ```sh
 IFS='\n' # Set Internal Field Separator to avoid spaces to behave as newline (might depend on the shell).
 
-for i in $(cat messages.txt); do echo $i | kcat -i -P -t my-topic; done
+for i in $(cat messages.txt); do echo $i | kcat -i -P -t workshop.messages; done
 ```
 
 ## Message as Key-Value Pairs
@@ -110,16 +110,16 @@ Sending messages with a key and a value, which is what usually happens when inte
 > as well as delete semantics and compaction of topics.
 
 ```sh
-$ kcat -P -t my-topic -K:
+$ kcat -P -t workshop.messages -K:
 
 1:{"Key": "Value"} # Enter
 # Ctrl-D
 ```
 
 ```sh
-$ kcat -C -t my-topic -K: -f 'Key: %k - Value: %s\n' -e
+$ kcat -C -t workshop.messages -K: -f 'Key: %k - Value: %s\n' -e
 Key: 1 - Value: {"Key": "Value"}
-% Reached end of topic my-topic [0] at offset 1: exiting
+% Reached end of topic workshop.messages [0] at offset 1: exiting
 ```
 
 Note that the files in the `data` folder contains messages formatted as key-value pairs:
@@ -135,7 +135,7 @@ Note that the files in the `data` folder contains messages formatted as key-valu
 Batch send the messages with:
 
 ```sh
-$ cat data/batch-1.txt | kcat -i -P -t my-topic -K:
+$ cat data/messages-1.txt | kcat -i -P -t workshop.messages -K:
 ```
 
 ## Partitioned Topics
@@ -143,57 +143,59 @@ $ cat data/batch-1.txt | kcat -i -P -t my-topic -K:
 Use `kafka-topics.sh` to create a topic with three partitions:
 
 ```sh
-$ kafka-topics.sh --bootstrap-server $KAFKA_BROKER --create --topic my-partitioned-topic --partitions 3
-Created topic my-partitioned-topic.
+$ kafka-topics.sh --bootstrap-server $KAFKA_BROKERS --create --topic workshop.messages.partitioned --partitions 3
+Created topic workshop.messages.partitioned
 ```
 
 List the topics available on the broker using:
 
 ```sh
-$ kafka-topics.sh --bootstrap-server $KAFKA_BROKER --list
-my-partitioned-topic
-my-topic
+$ kafka-topics.sh --bootstrap-server $KAFKA_BROKERS --list
+workshop.messages.partitioned
+workshop.messages
 ```
 
 Describe the partitioned topic:
 
 ```sh
-$ kafka-topics.sh --bootstrap-server $KAFKA_BROKER --describe --topic my-partitioned-topic
-Topic: my-partitioned-topic    Partition: 0    Leader: 1    Replicas: 1    Isr: 1
-Topic: my-partitioned-topic    Partition: 1    Leader: 1    Replicas: 1    Isr: 1
-Topic: my-partitioned-topic    Partition: 2    Leader: 1    Replicas: 1    Isr: 1
+$ kafka-topics.sh --bootstrap-server $KAFKA_BROKERS --describe --topic workshop.messages.partitioned
+Topic: workshop.messages.partitioned    Partition: 0    Leader: 1    Replicas: 1    Isr: 1
+Topic: workshop.messages.partitioned    Partition: 1    Leader: 1    Replicas: 1    Isr: 1
+Topic: workshop.messages.partitioned    Partition: 2    Leader: 1    Replicas: 1    Isr: 1
 ```
 
 Send multiple messages to the topic
 
 ```sh
-$ cat data/batch-3.txt | kcat -i -P -t my-partitioned-topic -K:
+$ cat data/messages-2.txt | kcat -i -P -t workshop.messages.partitioned -K:
 ```
 
 Read from all topics (the partitions and offsets are added to the formatting with `-p` and `-o`):
 
 ```sh
-7 [p: 0, o: 0]: {"message": "Message 7: Batch 3"}
-9 [p: 0, o: 1]: {"message": "Message 9: Batch 3"}
-10 [p: 0, o: 2]: {"message": "Message 10: Batch 3"}
-11 [p: 0, o: 3]: {"message": "Message 11: Batch 3"}
-12 [p: 0, o: 4]: {"message": "Message 12: Batch 3"}
-14 [p: 0, o: 5]: {"message": "Message 14: Batch 3"}
-% Reached end of topic my-partitioned-topic [0] at offset 6
-2 [p: 1, o: 0]: {"message": "Message 2: Batch 3"}
-3 [p: 1, o: 1]: {"message": "Message 3: Batch 3"}
-4 [p: 1, o: 2]: {"message": "Message 4: Batch 3"}
-5 [p: 1, o: 3]: {"message": "Message 5: Batch 3"}
-6 [p: 1, o: 4]: {"message": "Message 6: Batch 3"}
-15 [p: 1, o: 5]: {"message": "Message 15: Batch 3"}
-% Reached end of topic my-partitioned-topic [1] at offset 6
-1 [p: 2, o: 0]: {"message": "Message 1: Batch 3"}
-8 [p: 2, o: 1]: {"message": "Message 8: Batch 3"}
-13 [p: 2, o: 2]: {"message": "Message 13: Batch 3"}
-% Reached end of topic my-partitioned-topic [2] at offset 3: exiting
+$ kcat -C -t workshop.messages.partitioned -K: -f '%k [p: %p, o: %o]: %s\n' -e
+
+7 [p: 0, o: 0]: {"id": "uuid-7", "message": "Message 7"}
+9 [p: 0, o: 1]: {"id": "uuid-9", "message": "Message 9"}
+10 [p: 0, o: 2]: {"id": "uuid-10", "message": "Message 10"}
+11 [p: 0, o: 3]: {"id": "uuid-11", "message": "Message 11"}
+12 [p: 0, o: 4]: {"id": "uuid-12", "message": "Message 12"}
+14 [p: 0, o: 5]: {"id": "uuid-14", "message": "Message 14"}
+16 [p: 0, o: 6]: {"id": "uuid-16", "message": "Message 16"}
+18 [p: 0, o: 7]: {"id": "uuid-18", "message": "Message 18"}
+20 [p: 0, o: 8]: {"id": "uuid-20", "message": "Message 20"}
+% Reached end of topic workshop.messages.partitioned [0] at offset 9
+6 [p: 1, o: 0]: {"id": "uuid-6", "message": "Message 6"}
+15 [p: 1, o: 1]: {"id": "uuid-15", "message": "Message 15"}
+19 [p: 1, o: 2]: {"id": "uuid-19", "message": "Message 19"}
+8 [p: 2, o: 0]: {"id": "uuid-8", "message": "Message 8"}
+13 [p: 2, o: 1]: {"id": "uuid-13", "message": "Message 13"}
+17 [p: 2, o: 2]: {"id": "uuid-17", "message": "Message 17"}
+% Reached end of topic workshop.messages.partitioned [1] at offset 3
+% Reached end of topic workshop.messages.partitioned [2] at offset 3: exiting
 ```
 
-Note that the messages spread across the partitions, and only in order *within* each partition.
+Note that the messages spread across the partitions, and only in order *within* each partition. Logging is also concurrent.
 
 ## Advanced Topics
 

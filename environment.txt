@@ -12,4 +12,4 @@ function kcat() {
 }
 
 # For kafka/bin scripts
-export KAFKA_BROKER='localhost:9092'
+export KAFKA_BROKERS='localhost:9092'
