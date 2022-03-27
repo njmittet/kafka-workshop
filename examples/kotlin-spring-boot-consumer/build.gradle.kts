@@ -13,18 +13,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.springframework.kafka:spring-kafka")
-    implementation("org.springframework.boot:spring-boot-starter-logging")
-    implementation("org.slf4j:slf4j-api")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
-
-dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
