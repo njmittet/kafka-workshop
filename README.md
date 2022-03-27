@@ -197,6 +197,13 @@ $ kcat -C -t workshop.messages.partitioned -K: -f '%k [p: %p, o: %o]: %s\n' -e
 
 Note that the messages spread across the partitions, and only in order *within* each partition. Logging is also concurrent.
 
+## Example Applications
+
+The folder [examples](./examples) contains the following exampler (starter) applications:
+
+1. `kotling-spring-boot-consumer`: A Kotlin Spring Boot application that demonstrates how to customize the Kafka consumer configuration.
+2. `kotling-spring-boot-producer`: A Kotlin Spring Boot application that demonstrates how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
+
 ## Advanced Topics
 
 Compacting:
