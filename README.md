@@ -122,7 +122,7 @@ Key: 1 - Value: {"Key": "Value"}
 % Reached end of topic workshop.messages [0] at offset 1: exiting
 ```
 
-Note that the files in the `data` folder contains messages formatted as key-value pairs:
+Note that the files in the [data](./data) folder contains messages formatted as key-value pairs:
 
 ```txt
 1:{"message": "Message 1: Batch 1"}
@@ -199,7 +199,7 @@ Note that the messages spread across the partitions, and only in order *within* 
 
 ## Example Applications
 
-The folder [examples](./examples) contains the following exampler (starter) applications:
+The [examples](./examples) folder contains the following example (starter) applications:
 
 1. `kotling-spring-boot-consumer`: A Kotlin Spring Boot application that demonstrates how to customize the Kafka consumer configuration.
 2. `kotling-spring-boot-producer`: A Kotlin Spring Boot application that demonstrates how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
