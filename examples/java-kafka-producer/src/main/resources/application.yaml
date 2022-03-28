@@ -1,0 +1,9 @@
+server:
+  port: 9002
+
+spring:
+  main.banner-mode: 'off'
+  profiles:
+    active: default
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS}
