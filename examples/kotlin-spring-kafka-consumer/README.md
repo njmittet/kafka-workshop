@@ -1,6 +1,6 @@
-# kotlin-spring-boot-consumer
+# kotlin-spring-kafka-consumer
 
-A Kotlin Spring Boot application that demonstrates how to customize the Kafka consumer configuration.
+A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka consumer configuration.
 
 ## Usage
 

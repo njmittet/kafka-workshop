@@ -1,6 +1,6 @@
-# kotlin-spring-boot-producer
+# kotlin-spring-kafka-producer
 
-A Kotlin Spring Boot application that demonstrates how to customize the Kafka producer configuration.
+A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
 
 ## Usage
 
