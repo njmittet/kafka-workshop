@@ -1,10 +1,11 @@
 # kotlin-spring-kafka-producer
 
-A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
+A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to
+customize the Kafka producer configuration. The application provides a REST API for sending messages.
 
 ## Usage
 
-Set the address to Kafka in a environmmental variable:
+Set the address to Kafka in a environmental variable:
 
 ```sh
 export KAFKA_BROKERS=localhost:9092 
@@ -26,7 +27,7 @@ curl -s  http://localhost:9000/message \
 --data '{"message": "Message"}'
 ```
 
-An async message can be sendt with:
+Send an async message:
 
 ```sh
 curl -s  http://localhost:9000/message/async \

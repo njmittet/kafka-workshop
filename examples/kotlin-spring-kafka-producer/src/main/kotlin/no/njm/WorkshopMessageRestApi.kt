@@ -1,7 +1,6 @@
 package no.njm
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import no.njm.WorkshopMessageProducer.WorkshopMessageException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -23,7 +22,7 @@ class WorkshopMessageRestApi(
     @PostMapping("/message")
     fun sendMessage(@RequestBody message: Message?): ResponseEntity<Any> {
         message?.let {
-            workshopMessageProducer.sendSync(message.toWorkshopMessage(UUID.randomUUID().toString()))
+            workshopMessageProducer.sendSync(message.toWorkshopMessage())
             return ResponseEntity<Any>(HttpStatus.ACCEPTED)
         }
         return ResponseEntity<Any>(HttpStatus.BAD_REQUEST)
@@ -32,7 +31,7 @@ class WorkshopMessageRestApi(
     @PostMapping("/message/async")
     fun sendAsyncMessage(@RequestBody message: Message?): ResponseEntity<Any> {
         message?.let {
-            workshopMessageProducer.sendAsync(message.toWorkshopMessage(UUID.randomUUID().toString()))
+            workshopMessageProducer.sendAsync(message.toWorkshopMessage())
             return ResponseEntity<Any>(HttpStatus.ACCEPTED)
         }
         return ResponseEntity<Any>(HttpStatus.BAD_REQUEST)
@@ -43,5 +42,6 @@ class WorkshopMessageRestApi(
         var message: String,
     )
 
-    private fun Message.toWorkshopMessage(uuid: String): WorkshopMessage = WorkshopMessage(uuid, message)
+    private fun Message.toWorkshopMessage(): WorkshopMessage =
+        WorkshopMessage(UUID.randomUUID().toString(), message)
 }

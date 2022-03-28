@@ -35,8 +35,8 @@ class WorkshopMessageProducer(
             log.info("Produced async record with key: [${workshopMessage.id}] on topic: [${recordMetadata.topic()}].")
         }
     }
-
-    class WorkshopMessageException(e: Exception) : RuntimeException(e)
 }
+
+class WorkshopMessageException(e: Throwable) : RuntimeException(e)
 
 data class WorkshopMessage(val id: String, val message: String)
