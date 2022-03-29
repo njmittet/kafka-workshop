@@ -201,8 +201,10 @@ Note that the messages spread across the partitions, and only in order *within* 
 
 The [examples](./examples) folder contains the following example (starter) applications:
 
-1. `kotlin-spring-kafka-consumer`: A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka consumer configuration.
-2. `kotlin-spring-kafka-producer`: A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
+1. A Java Spring Boot application that uses
+the [Kafka Java Client](https://docs.confluent.io/clients-kafka-java/current/overview.html) to send messages.
+2. `kotlin-spring-kafka-consumer`: A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka consumer configuration.
+3. `kotlin-spring-kafka-producer`: A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
 
 ## Advanced Topics
 
