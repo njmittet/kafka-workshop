@@ -13,8 +13,7 @@ The repository is created for an internal [miles.no](https://www.miles.no) Kafka
    - For Windows 11 or Windows 10 version 2004 or higher: Run `wsl-install` as Administrator (restart required).
    - For older Windows versions: [Follow these instructions](https://docs.microsoft.com/en-us/windows/wsl/install-manual).
 2. Download and install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
-3. Download and install [docker-compose for Windows](https://docs.docker.com/compose/install).
-4. Download and install [Download .NET Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1).
+3. Download and install [Download .NET Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1).
 
 ## General Setup
 
