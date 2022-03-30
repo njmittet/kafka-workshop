@@ -14,7 +14,7 @@ public class KafkaConfiguration {
 
     private final String kafkaBrokers;
 
-    KafkaConfiguration(@Value("${KAFKA_BROKERS}") String kafkaBrokers) {
+    KafkaConfiguration(@Value("${spring.kafka.bootstrap-servers}") String kafkaBrokers) {
         this.kafkaBrokers = kafkaBrokers;
     }
 

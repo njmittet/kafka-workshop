@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Future;
 
+import static no.njm.Application.WORKSHOP_TOPIC;
+
 @Component
 class WorkshopMessageProducer {
 
@@ -24,7 +26,7 @@ class WorkshopMessageProducer {
 
     void sendSync(WorkshopMessage workshopMessage) {
         try {
-            Future<RecordMetadata> send = kafkaProducer.send(new ProducerRecord<>("workshop.messages", workshopMessage.id, workshopMessage));
+            Future<RecordMetadata> send = kafkaProducer.send(new ProducerRecord<>(WORKSHOP_TOPIC, workshopMessage.id, workshopMessage));
             kafkaProducer.flush();
             // .get() waits for the producer to flush.
             RecordMetadata recordMetadata = send.get();

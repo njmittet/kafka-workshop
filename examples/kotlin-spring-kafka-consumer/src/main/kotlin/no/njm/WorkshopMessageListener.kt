@@ -12,7 +12,7 @@ class WorkshopMessageListener {
 
     @KafkaListener(
         topics = [WORKSHOP_TOPIC],
-        groupId = "kotlin-kafka-concurrent",
+        groupId = "kotlin-consumer-concurrent",
         properties = ["auto.offset.reset=earliest"],
         concurrency = "3",
     )
@@ -20,7 +20,7 @@ class WorkshopMessageListener {
         try {
             val message = consumerRecord.value().toWorkshopMessage()
             log.info(
-                "Message with key:[${consumerRecord.key()}] is: $message on partition:[${consumerRecord.partition()}]."
+                "Message with key:[${consumerRecord.key()}] on partition:[${consumerRecord.partition()}] is: $message."
             )
             acknowledgment.acknowledge()
         } catch (e: Exception) {
