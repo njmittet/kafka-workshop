@@ -14,12 +14,12 @@ public class KafkaConfiguration {
 
     private final String kafkaBrokers;
 
-    public KafkaConfiguration(@Value("${KAFKA_BROKERS}") String kafkaBrokers) {
+    KafkaConfiguration(@Value("${spring.kafka.bootstrap-servers}") String kafkaBrokers) {
         this.kafkaBrokers = kafkaBrokers;
     }
 
     @Bean
-    public KafkaProducer<String, WorkshopMessage> workshopMessageKafkaProducer() {
+    KafkaProducer<String, WorkshopMessage> workshopMessageKafkaProducer() {
         Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers);
         properties.put(ProducerConfig.ACKS_CONFIG, "all");

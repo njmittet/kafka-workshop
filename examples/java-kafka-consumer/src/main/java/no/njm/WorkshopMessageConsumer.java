@@ -13,16 +13,16 @@ import java.util.concurrent.Future;
 @Component
 class WorkshopMessageProducer {
 
-    private static final Logger log = LoggerFactory.getLogger(WorkshopMessageProducer.class);
+    public static final Logger log = LoggerFactory.getLogger(WorkshopMessageProducer.class);
 
     private final KafkaProducer<String, WorkshopMessage> kafkaProducer;
 
     @Autowired
-    WorkshopMessageProducer(KafkaProducer<String, WorkshopMessage> workshopMessageKafkaProducer) {
+    public WorkshopMessageProducer(KafkaProducer<String, WorkshopMessage> workshopMessageKafkaProducer) {
         kafkaProducer = workshopMessageKafkaProducer;
     }
 
-    void sendSync(WorkshopMessage workshopMessage) {
+    public void sendSync(WorkshopMessage workshopMessage) {
         try {
             Future<RecordMetadata> send = kafkaProducer.send(new ProducerRecord<>("workshop.messages", workshopMessage.id, workshopMessage));
             kafkaProducer.flush();
@@ -35,7 +35,7 @@ class WorkshopMessageProducer {
         }
     }
 
-    void sendAsync(WorkshopMessage workshopMessage) {
+    public void sendAsync(WorkshopMessage workshopMessage) {
         kafkaProducer.send(new ProducerRecord<>("workshop.messages", workshopMessage.id, workshopMessage), (recordMetadata, e) -> {
             if (e != null) {
                 log.error("Error sending async message: {}.", workshopMessage);
