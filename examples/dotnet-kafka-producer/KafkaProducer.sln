@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaProducer.WebAPI", "KafkaProducer\KafkaProducer.WebAPI.csproj", "{3452D38B-C6EA-42AB-84CB-BCB388DF0DCF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaProducer.Infrastrutcure", "KafkaProducer.Infrastrutcure\KafkaProducer.Infrastrutcure.csproj", "{DB3DF330-79A7-4079-868F-4B191B18E7CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3452D38B-C6EA-42AB-84CB-BCB388DF0DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3452D38B-C6EA-42AB-84CB-BCB388DF0DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3452D38B-C6EA-42AB-84CB-BCB388DF0DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3452D38B-C6EA-42AB-84CB-BCB388DF0DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB3DF330-79A7-4079-868F-4B191B18E7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3DF330-79A7-4079-868F-4B191B18E7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3DF330-79A7-4079-868F-4B191B18E7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3DF330-79A7-4079-868F-4B191B18E7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF4C3328-3840-4C14-8F8E-E4E659355DA2}
+	EndGlobalSection
+EndGlobal
