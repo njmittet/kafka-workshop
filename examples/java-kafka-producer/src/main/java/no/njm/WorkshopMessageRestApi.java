@@ -18,17 +18,17 @@ class WorkshopMessageRestApi {
     private final WorkshopMessageProducer workshopMessageProducer;
 
     @Autowired
-    public WorkshopMessageRestApi(WorkshopMessageProducer workshopMessageProducer) {
+    WorkshopMessageRestApi(WorkshopMessageProducer workshopMessageProducer) {
         this.workshopMessageProducer = workshopMessageProducer;
     }
 
     @ExceptionHandler(WorkshopMessageException.class)
-    public ResponseEntity<String> handleException() {
+    ResponseEntity<String> handleException() {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/message")
-    public ResponseEntity<String> sendMessage(@RequestBody Message message) {
+    ResponseEntity<String> sendMessage(@RequestBody Message message) {
         if (message != null) {
             workshopMessageProducer.sendSync(toWorkshopMessage(message));
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -37,7 +37,7 @@ class WorkshopMessageRestApi {
     }
 
     @PostMapping("/message/async")
-    public ResponseEntity<String> sendAsyncMessage(@RequestBody Message message) {
+    ResponseEntity<String> sendAsyncMessage(@RequestBody Message message) {
         if (message != null) {
             workshopMessageProducer.sendAsync(toWorkshopMessage(message));
             return new ResponseEntity<>(HttpStatus.ACCEPTED);

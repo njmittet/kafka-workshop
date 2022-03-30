@@ -30,7 +30,7 @@ curl -s  http://localhost:9002/message \
 An async message:
 
 ```sh
-curl -s  http://localhost:9000/message/async \
+curl -s  http://localhost:9002/message/async \
 -H "Content-Type: application/json" \
 --data '{"message": "Message"}'
 ```
