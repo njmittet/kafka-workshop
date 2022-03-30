@@ -1,56 +1,52 @@
 package no.njm;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Future;
+import java.time.Duration;
+import java.util.List;
+
+import static no.njm.Application.WORKSHOP_TOPIC;
 
 @Component
-class WorkshopMessageProducer {
+class WorkshopMessageConsumer {
 
-    public static final Logger log = LoggerFactory.getLogger(WorkshopMessageProducer.class);
+    private static final Logger log = LoggerFactory.getLogger(WorkshopMessageConsumer.class);
 
-    private final KafkaProducer<String, WorkshopMessage> kafkaProducer;
+    private final KafkaConsumer<String, WorkshopMessage> kafkaConsumer;
 
     @Autowired
-    public WorkshopMessageProducer(KafkaProducer<String, WorkshopMessage> workshopMessageKafkaProducer) {
-        kafkaProducer = workshopMessageKafkaProducer;
+    public WorkshopMessageConsumer(KafkaConsumer<String, WorkshopMessage> workshopMessageKafkaConsumer) {
+        kafkaConsumer = workshopMessageKafkaConsumer;
     }
 
-    public void sendSync(WorkshopMessage workshopMessage) {
+    @EventListener
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        kafkaConsumer.subscribe(List.of(WORKSHOP_TOPIC));
+
         try {
-            Future<RecordMetadata> send = kafkaProducer.send(new ProducerRecord<>("workshop.messages", workshopMessage.id, workshopMessage));
-            kafkaProducer.flush();
-            // .get() waits for the producer to flush.
-            RecordMetadata recordMetadata = send.get();
-            log.info("Produced record with key: [{}] on topic: [{}].", workshopMessage.id, recordMetadata.topic());
-        } catch (Exception e) {
-            log.error("Error sending message: {}.", workshopMessage);
-            throw new WorkshopMessageException(e);
-        }
-    }
+            while (true) {
+                // Returns immediately if there are records available. Otherwise, it will await the timeout value.
+                ConsumerRecords<String, WorkshopMessage> consumerRecords = kafkaConsumer.poll(Duration.ofSeconds(10));
 
-    public void sendAsync(WorkshopMessage workshopMessage) {
-        kafkaProducer.send(new ProducerRecord<>("workshop.messages", workshopMessage.id, workshopMessage), (recordMetadata, e) -> {
-            if (e != null) {
-                log.error("Error sending async message: {}.", workshopMessage);
+                consumerRecords.forEach(consumerRecord -> {
+                    String key = consumerRecord.key();
+                    int partition = consumerRecord.partition();
+                    WorkshopMessage workshopMessage = consumerRecord.value();
+
+                    log.info("Message with key:[{}] on partition:[{}] is: {}.", key, partition, workshopMessage);
+                    // Commit each message immediately.
+                    kafkaConsumer.commitSync();
+                });
             }
-            log.info("Produced async record with key: [{}] on topic: [{}].", workshopMessage.id, recordMetadata.topic());
-        });
-
-        // Sends all buffered records immediately, even if linger.ms is greater than 0.
-        kafkaProducer.flush();
-    }
-
-    static class WorkshopMessageException extends RuntimeException {
-
-        WorkshopMessageException(Throwable cause) {
-            super(cause);
+        } finally {
+            kafkaConsumer.close();
         }
     }
 
