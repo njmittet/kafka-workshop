@@ -7,11 +7,20 @@ This repository contains:
 
 The repository is created for an internal [miles.no](https://www.miles.no) Kafka Workshop, but should be valuable for everyone that wants to check out Apache Kafka.
 
-## Requirements
+## For Windows Users
+
+1. Install Windows Subsystem for Linux
+   - For Windows 11 or Windows 10 version 2004 or higher: Run `wsl-install` as Administrator (restart required).
+   - For older Windows versions: [Follow these instructions](https://docs.microsoft.com/en-us/windows/wsl/install-manual).
+2. Download and install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
+3. Download and install [docker-compose for Windows](https://docs.docker.com/compose/install).
+4. Download and install [Download .NET Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1).
+
+## General Setup
 
 For the instructions in this repo to work, you will need:
 
-1. A working [Docker](docker) installation
+1. A working [Docker](docker) installation.
 2. A working [docker-compose](https://docs.docker.com/compose/) installation.
 3. The `bin/kafka` scripts on your path (optional, but recommended).
 
