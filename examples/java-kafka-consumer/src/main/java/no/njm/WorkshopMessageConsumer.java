@@ -22,12 +22,12 @@ class WorkshopMessageConsumer {
     private final KafkaConsumer<String, WorkshopMessage> kafkaConsumer;
 
     @Autowired
-    public WorkshopMessageConsumer(KafkaConsumer<String, WorkshopMessage> workshopMessageKafkaConsumer) {
+    WorkshopMessageConsumer(KafkaConsumer<String, WorkshopMessage> workshopMessageKafkaConsumer) {
         kafkaConsumer = workshopMessageKafkaConsumer;
     }
 
     @EventListener
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    void onApplicationEvent(ContextRefreshedEvent event) {
         kafkaConsumer.subscribe(List.of(WORKSHOP_TOPIC));
 
         try {
