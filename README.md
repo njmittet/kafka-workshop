@@ -10,8 +10,9 @@ The repository is created for an internal [miles.no](https://www.miles.no) Kafka
 ## For Windows Users
 
 1. Install Windows Subsystem for Linux
-   - For Windows 11 or Windows 10 version 2004 or higher: Run `wsl-install` as Administrator (restart required).
+   - For Windows 11 or Windows 10 version 2004 or higher: Run `wsl --install` as Administrator.
    - For older Windows versions: [Follow these instructions](https://docs.microsoft.com/en-us/windows/wsl/install-manual).
+   - Restart computer and let ubuntu install.
 2. Download and install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
 3. Download and install [Download .NET Core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1).
 
@@ -26,8 +27,8 @@ For the instructions in this repo to work, you will need:
 ### Clone Repository
 
 1. Clone this repository: `git clone https://github.com/nilsjorgen/docker-kafka-kcat.git`
-2. `cd` to the cloned folder.
-3. Run `source ./environment.txt`
+2. `cd` to the cloned folder. (Windows users open Ubuntu and cd to cloned folder)
+3. Run `source ./environment.txt` (windows users need to LF format the file first: Run `perl -pi -e 's/\r\n/\n/g' environment.txt` or do it manually in your IDE)
 4. Start Kafka cluster by executing the `docker-compose.yaml` file: `'docker-compose up -d`
 5. Verify that Kcat is  working:
 
@@ -46,6 +47,10 @@ Metadata for all topics (from broker 1: kafka:29092/1):
 2. Extract Kafka with `tar -xvzf kafka_2.13-3.1.0.tgz`
 3. Preferably, put `kafka_2.13-3.1.0/bin` on your `$path`.
 
+### Java
+The Kafka scripts requires java installed. 
+- Ubuntu download:
+`sudo apt install default-jre`
 ## Usage
 
 For a quick introduction, have a look at [Learn how to use Kcat](https://dev.to/de_maric/learn-how-to-use-kafkacat-the-most-versatile-kafka-cli-client-1kb4) or the [Kcat Documentation](https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html).
@@ -106,7 +111,7 @@ The example above vil trigger a `batch mode` send, which has its own implication
 When reading files from stdin the `-t` **must** be used in order to turn of TTY, and it **has to be the first parameter**.
 
 ```sh
-IFS='\n' # Set Internal Field Separator to avoid spaces to behave as newline (might depend on the shell).
+IFS='\n' # (Windows users skip this step) Set Internal Field Separator to avoid spaces to behave as newline (might depend on the shell).
 
 for i in $(cat messages.txt); do echo $i | kcat -i -P -t workshop.messages; done
 ```
@@ -216,6 +221,8 @@ The [examples](./examples) folder contains the following example (starter) appli
 2. `java-kafka-consumer`: A Java Spring Boot application that uses the [Kafka Java Client](https://docs.confluent.io/clients-kafka-java/current/overview.html) to receive messages.
 3. `kotlin-spring-kafka-consumer`: A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka consumer configuration.
 4. `kotlin-spring-kafka-producer`: A Kotlin Spring Boot application that uses [Spring Kafka](https://spring.io/projects/spring-kafka) to demonstrate how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
+5. `dotnet-kafka-consumer`: A .NetCore application that uses [Confluent Kafka](https://docs.confluent.io/clients-confluent-kafka-dotnet/current/overview.html) to demonstrate how to customize the Kafka consumer configuration.
+6. `dotnet-kafka-producer`: A .NetCore application that uses [Confluent Kafka](https://docs.confluent.io/clients-confluent-kafka-dotnet/current/overview.html) to demonstrate how to customize the Kafka producer configuration. The application provides a REST API for sending messages.
 
 See the [Spring Boot Kafka Getting Started Guide](https://docs.spring.io/spring-kafka/docs/current/reference/html/#getting-started) for an extremely minimal example.
 
