@@ -10,7 +10,7 @@ The repository is created for an internal [miles.no](https://www.miles.no) Kafka
 ## For Windows Users
 
 1. Install Windows Subsystem for Linux
-   - For Windows 11 or Windows 10 version 2004 or higher: Run `wsl --install` as Administrator.
+   - For Windows 11 or Windows 10 version 2004 or higher: Run `wsl --install -d Ubuntu` as Administrator.
    - For older Windows versions: [Follow these instructions](https://docs.microsoft.com/en-us/windows/wsl/install-manual).
    - Restart computer and let ubuntu install.
 2. Download and install [Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/).
@@ -27,9 +27,9 @@ For the instructions in this repo to work, you will need:
 ### Clone Repository
 
 1. Clone this repository: `git clone https://github.com/nilsjorgen/docker-kafka-kcat.git`
-2. `cd` to the cloned folder. (Windows users open Ubuntu and cd to cloned folder)
+2. `cd` to the cloned folder. (windows: Open Ubuntu in the Windows terminal or open Ubuntu and type `cd /mnt/c` to get to C:\ )
 3. Run `source ./environment.txt` (windows users need to LF format the file first: Run `perl -pi -e 's/\r\n/\n/g' environment.txt` or do it manually in your IDE)
-4. Start Kafka cluster by executing the `docker-compose.yaml` file: `'docker-compose up -d`
+4. Start Kafka cluster by executing the `docker-compose.yaml` file: `'docker-compose up -d` (windows: If you get Permission denied. Make sure you have docker desktop running and restart Ubuntu)
 5. Verify that Kcat is  working:
 
 ```sh
