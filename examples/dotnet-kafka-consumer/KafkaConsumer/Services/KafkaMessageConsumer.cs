@@ -37,9 +37,10 @@ namespace KafkaConsumer.Services
             {
                 GroupId = "dotnet-kafka",
                 BootstrapServers = bootstrapServer,
-                EnableSslCertificateVerification = false,
                 AutoOffsetReset = AutoOffsetReset.Latest,
+                EnableSslCertificateVerification = false,
                 EnableAutoCommit = false,
+                AllowAutoCreateTopics = true,
             };
             _logger.LogInformation($"Starting KafaConsumer on topic: '{topic}' with bootstrap server: '{bootstrapServer}'...");
             using (var consumer = 
@@ -67,18 +68,26 @@ namespace KafkaConsumer.Services
                     }
                     while(!stoppingToken.IsCancellationRequested)
                     {
+                      try {
                         var result = consumer.Consume(stoppingToken);
                         _logger.LogInformation($"Consumed message '{result.Message.Value.Message}' on partition: '{result.Partition.Value}' at offset: '{result.TopicPartitionOffset.Offset}'");
                         if(stoppingToken.IsCancellationRequested)
                         {
                             _logger.LogWarning("Kafka consumer stopped");
                         }
+                      } catch(ConsumeException e) {
+                            if (e.Error.Code == ErrorCode.UnknownTopicOrPart)
+                            {
+                                _logger.LogWarning("Attempting to consume from an unknown topic or partition");
+                            }
+                            else
+                            {
+                                _logger.LogError("ConsumeException: " + e.Message);
+                            }
+                        } catch(Exception e) {
+                            _logger.LogError(e.ToString());
+                      }
                     }
-                }
-                catch (ConsumeException ex)
-                {
-                    _logger.LogError($"Error occured: {ex.Error.Reason}");
-                    consumer.Close();
                 }
                 catch (Exception ex)
                 {
