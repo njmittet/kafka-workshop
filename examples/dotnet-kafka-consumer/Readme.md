@@ -3,7 +3,7 @@ A .Net application that uses the Confluent Kafka nuget package to consume kafka 
 
 ## Install
 
-[Download .Net core 3.1](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
+[Download .Net core 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 ## Usage
 
