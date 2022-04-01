@@ -19,6 +19,8 @@ namespace KafkaProducer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
             services.AddControllers();
             services.AddSingleton<IKafkaMessageProducer, KafkaMessageProducer>();
         }
@@ -30,6 +32,8 @@ namespace KafkaProducer
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseRouting();
 
