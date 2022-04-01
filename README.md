@@ -48,12 +48,12 @@ Metadata for all topics (from broker 1: kafka:29092/1):
 3. Preferably, put `kafka_2.13-3.1.0/bin` on your `$path`.
 
 ### Java
-The Kafka scripts requires java installed. 
-- Ubuntu download:
-`sudo apt install default-jre`
+
+The Kafka scripts requires java installed:  `sudo apt install default-jre`
+
 ## Usage
 
-For a quick introduction, have a look at [Learn how to use Kcat](https://dev.to/de_maric/learn-how-to-use-kafkacat-the-most-versatile-kafka-cli-client-1kb4) or the [Kcat Documentation](https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html).
+For a quick introduction to Kcat, have a look at [Learn how to use Kcat](https://dev.to/de_maric/learn-how-to-use-kafkacat-the-most-versatile-kafka-cli-client-1kb4) or the [Kcat Documentation](https://docs.confluent.io/platform/current/app-development/kafkacat-usage.html).
 
 Kcat options:
 
