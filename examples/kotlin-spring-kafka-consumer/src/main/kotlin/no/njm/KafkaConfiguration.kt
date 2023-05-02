@@ -26,6 +26,7 @@ class KafkaConfiguration {
         ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to "latest",
         ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG to false,
         ConsumerConfig.MAX_POLL_RECORDS_CONFIG to 50,
+
     )
 
     @Bean
@@ -35,6 +36,7 @@ class KafkaConfiguration {
     ) = ConcurrentKafkaListenerContainerFactory<String, String>().also {
         it.consumerFactory = consumerFactory
         it.containerProperties.ackMode = AckMode.MANUAL_IMMEDIATE
+        it.isBatchListener = true
         it.setCommonErrorHandler(errorHandler)
     }
 }

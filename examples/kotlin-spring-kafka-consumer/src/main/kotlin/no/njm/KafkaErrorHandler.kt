@@ -2,6 +2,7 @@ package no.njm
 
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.springframework.kafka.listener.DefaultErrorHandler
 import org.springframework.kafka.listener.MessageListenerContainer
 import org.springframework.stereotype.Component
@@ -19,10 +20,13 @@ class KafkaErrorHandler : DefaultErrorHandler(
 
     override fun handleRemaining(
         thrownException: Exception,
-        records: MutableList<ConsumerRecord<*, *>>,
+        records: List<ConsumerRecord<*, *>>,
         consumer: Consumer<*, *>,
         container: MessageListenerContainer
     ) {
+        if (records.isEmpty()) {
+            log.error("The listener returned an empty set of records.")
+        }
         records.forEach { record ->
             log.error(
                 "Error processing record with key: [${record.key()}] (offset: ${record.offset()}, partition: ${record.partition()}).",
@@ -30,5 +34,24 @@ class KafkaErrorHandler : DefaultErrorHandler(
         }
         // The parent error handler will log the exception.
         super.handleRemaining(thrownException, records, consumer, container)
+    }
+
+    override fun handleBatch(
+        thrownException: java.lang.Exception,
+        records: ConsumerRecords<*, *>,
+        consumer: Consumer<*, *>,
+        container: MessageListenerContainer,
+        invokeListener: Runnable
+    ) {
+        if (records.isEmpty) {
+            log.error("The listener returned an empty set of records.")
+        }
+        records.forEach { record ->
+            log.error(
+                "Error processing record with key: [${record.key()}] (offset: ${record.offset()}, partition: ${record.partition()}).",
+            )
+        }
+        // The parent error handler will log the exception.
+        super.handleBatch(thrownException, records, consumer, container, invokeListener)
     }
 }
